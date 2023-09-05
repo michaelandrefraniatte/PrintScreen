@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PrintScreen</title>
+    <meta name="description" content="A tool to have screen printed and manage it">
+    <meta name="keywords" content="screen, print, manage">
+    <meta name="author" content="MICHAEL ANDRE FRANIATTE">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../extra/w3.css">
+    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../custom/custom.css" />
+    <link rel="stylesheet" href="../extra/rgpd.css" />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css">
+    <link rel="stylesheet" href="../extra/spinner.css" />
+
+</head>
+
+<body id="page-top" onLoad="window_onload()">
+
+    <div class="back">
+
+    <div class="fa fa-spinner fa-spin spinner show"></div>
+
+    <span aria-label="No Cookies!" class="infobulle">&#8505;</span>
+
+    <button onclick="topFunction()" id="TopBtn" aria-label="Go to top">▲</button>
+
+    <div id="banner"><img src="../img/favicon.jpg" /><div id="closebanner">✖</div><div id="textbanner">This website respect entirely the life privacy. No cookies are stored on any database or any file or any webbrowser.</div><div id="button1banner">I understand</div><div id="button2banner">I don't understand</div></div>
+
+    <div class="top w3-center">
+        <a href="../#printscreen"><img class="logo" src="ps.png" alt="ps"></a>
+        <div class="title colored">
+            <h2>PrintScreen</h2>
+            <h1>Easy to Print Screen</h1>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="w3-row first-section">
+            <div class="w3-container">
+                <h3 class="w3-center colored"><b>Have a Capture of Scoreboard</b></h3>
+                <p>
+                    <b>T</b>his program is allowing to have a capture of screen using GDI+ from SharpDX. When you clip your screen but you don't have Paint to copy your clipboard. Let's see...
+                </p>
+            </div>
+        </div>
+
+        <div class="w3-center row">
+            <div class="column">
+                <img src="../img/ps-main.jpg" alt="ps-main" width="45%" height="auto" onclick='img_box("../img/ps-main.jpg")'>
+            </div>
+        </div>
+
+        <div class="w3-row second-section">
+            <div class="w3-container">
+                <h3 class="w3-center colored"><b>Considerations About the Program</b></h3>
+                <p>
+                    <b>T</b>he print screen key is used for taking screenshots. My source codes and program are <a href="https://github.com/michaelandrefraniatte/PrintScreen">here</a>.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="bottom w3-center">
+        <img src="../img/favicon.png" />
+        <br>
+        <b class="white">MAF</b>
+        <br>
+        <b class="colored">©1999-2023</b>
+    </footer>
+
+    </div>
+
+    <script type="text/javascript">
+        function window_onload() {
+            var sc = document.createElement('script');
+            sc.src = "../custom/custom.js";
+            document.getElementsByTagName('head')[0].appendChild(sc);
+   		    document.getElementsByClassName("spinner")[0].classList.remove("show");
+   		    document.getElementsByClassName("spinner")[0].classList.add("hide");
+  		    $(".spinner").removeClass("show");
+   		    $(".spinner").addClass("hide");
+        }
+    </script>
+
+</body>
+</html>
