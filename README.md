@@ -1,3 +1,1 @@
-﻿https://michaelandrefraniatte.github.io/PrintScreen  
-  
-https://github.com/michaelandrefraniatte  
+﻿https://github.com/michaelandrefraniatte
