@@ -34,3 +34,14 @@ C:\Users\micha\Documents\Perso\PrintScreen\Src\PrintScreen\PrintScreen\obj\Relea
 C:\Users\micha\Documents\Perso\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScreen.csproj.CopyComplete
 C:\Users\micha\Documents\Perso\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScreen.exe
 C:\Users\micha\Documents\Perso\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScreen.pdb
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\bin\Release\PrintScreen.exe.config
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\bin\Release\PrintScreen.exe
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\bin\Release\PrintScreen.pdb
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScreen.csproj.AssemblyReference.cache
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScreen.Form1.resources
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScreen.Properties.Resources.resources
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScreen.csproj.GenerateResource.cache
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScreen.csproj.CoreCompileInputs.cache
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScr.4FF03EE4.Up2Date
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScreen.exe
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScreen.pdb

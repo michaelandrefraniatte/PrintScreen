@@ -33,9 +33,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(88, 35);
+            this.button1.Location = new System.Drawing.Point(117, 43);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(100, 28);
             this.button1.TabIndex = 1;
             this.button1.Text = "Capture";
             this.button1.UseVisualStyleBackColor = true;
@@ -43,14 +44,16 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(280, 89);
+            this.ClientSize = new System.Drawing.Size(373, 110);
             this.Controls.Add(this.button1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "CaptureScreenTest";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.ResumeLayout(false);
 
         }

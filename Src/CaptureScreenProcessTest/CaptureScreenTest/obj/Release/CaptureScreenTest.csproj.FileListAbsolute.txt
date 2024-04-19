@@ -21,3 +21,13 @@ C:\Users\mic\Documents\GitHub\CaptureScreenProcessTest\Src\CaptureScreenTest\Cap
 C:\Users\mic\Documents\GitHub\CaptureScreenProcessTest\Src\CaptureScreenTest\CaptureScreenTest\obj\Release\CaptureScreenTest.csproj.CoreCompileInputs.cache
 C:\Users\mic\Documents\GitHub\CaptureScreenProcessTest\Src\CaptureScreenTest\CaptureScreenTest\obj\Release\CaptureScreenProcessTest.exe
 C:\Users\mic\Documents\GitHub\CaptureScreenProcessTest\Src\CaptureScreenTest\CaptureScreenTest\obj\Release\CaptureScreenProcessTest.pdb
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureScreenProcessTest\CaptureScreenTest\bin\Release\CaptureScreenProcessTest.exe.config
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureScreenProcessTest\CaptureScreenTest\bin\Release\CaptureScreenProcessTest.exe
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureScreenProcessTest\CaptureScreenTest\bin\Release\CaptureScreenProcessTest.pdb
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureScreenProcessTest\CaptureScreenTest\obj\Release\CaptureScreenTest.csproj.AssemblyReference.cache
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureScreenProcessTest\CaptureScreenTest\obj\Release\CaptureScreenTest.Form1.resources
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureScreenProcessTest\CaptureScreenTest\obj\Release\CaptureScreenProcessTest.Properties.Resources.resources
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureScreenProcessTest\CaptureScreenTest\obj\Release\CaptureScreenTest.csproj.GenerateResource.cache
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureScreenProcessTest\CaptureScreenTest\obj\Release\CaptureScreenTest.csproj.CoreCompileInputs.cache
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureScreenProcessTest\CaptureScreenTest\obj\Release\CaptureScreenProcessTest.exe
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureScreenProcessTest\CaptureScreenTest\obj\Release\CaptureScreenProcessTest.pdb
