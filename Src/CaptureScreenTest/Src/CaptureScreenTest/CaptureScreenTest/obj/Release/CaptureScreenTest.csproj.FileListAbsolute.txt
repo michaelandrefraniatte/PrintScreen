@@ -1,0 +1,12 @@
+C:\Users\mic\Documents\GitHub\CaptureScreenTest\Src\CaptureScreenTest\CaptureScreenTest\bin\Release\CaptureScreenTest.exe.config
+C:\Users\mic\Documents\GitHub\CaptureScreenTest\Src\CaptureScreenTest\CaptureScreenTest\bin\Release\CaptureScreenTest.exe
+C:\Users\mic\Documents\GitHub\CaptureScreenTest\Src\CaptureScreenTest\CaptureScreenTest\bin\Release\CaptureScreenTest.pdb
+C:\Users\mic\Documents\GitHub\CaptureScreenTest\Src\CaptureScreenTest\CaptureScreenTest\obj\Release\CaptureScreenTest.csproj.AssemblyReference.cache
+C:\Users\mic\Documents\GitHub\CaptureScreenTest\Src\CaptureScreenTest\CaptureScreenTest\obj\Release\CaptureScreenTest.csproj.SuggestedBindingRedirects.cache
+C:\Users\mic\Documents\GitHub\CaptureScreenTest\Src\CaptureScreenTest\CaptureScreenTest\obj\Release\CaptureScreenTest.Form1.resources
+C:\Users\mic\Documents\GitHub\CaptureScreenTest\Src\CaptureScreenTest\CaptureScreenTest\obj\Release\CaptureScreenTest.Properties.Resources.resources
+C:\Users\mic\Documents\GitHub\CaptureScreenTest\Src\CaptureScreenTest\CaptureScreenTest\obj\Release\CaptureScreenTest.csproj.GenerateResource.cache
+C:\Users\mic\Documents\GitHub\CaptureScreenTest\Src\CaptureScreenTest\CaptureScreenTest\obj\Release\CaptureScreenTest.csproj.CoreCompileInputs.cache
+C:\Users\mic\Documents\GitHub\CaptureScreenTest\Src\CaptureScreenTest\CaptureScreenTest\obj\Release\CaptureScreenTest.csproj.CopyComplete
+C:\Users\mic\Documents\GitHub\CaptureScreenTest\Src\CaptureScreenTest\CaptureScreenTest\obj\Release\CaptureScreenTest.exe
+C:\Users\mic\Documents\GitHub\CaptureScreenTest\Src\CaptureScreenTest\CaptureScreenTest\obj\Release\CaptureScreenTest.pdb

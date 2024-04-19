@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>CaptureMirror</id>
+    <version>1.0.0</version>
+    <authors>CaptureMirror</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework="net6.0-windows7.0" />
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net6.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WindowsForms" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\bin\Debug\net6.0-windows\CaptureMirror.runtimeconfig.json" target="lib\net6.0-windows7.0\CaptureMirror.runtimeconfig.json" />
+    <file src="C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\bin\Debug\net6.0-windows\CaptureMirror.dll" target="lib\net6.0-windows7.0\CaptureMirror.dll" />
+  </files>
+</package>

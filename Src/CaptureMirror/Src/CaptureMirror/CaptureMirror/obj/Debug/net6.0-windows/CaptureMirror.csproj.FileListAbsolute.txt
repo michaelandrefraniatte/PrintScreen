@@ -1,0 +1,17 @@
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\bin\Debug\net6.0-windows\CaptureMirror.exe
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\bin\Debug\net6.0-windows\CaptureMirror.deps.json
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\bin\Debug\net6.0-windows\CaptureMirror.runtimeconfig.json
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\bin\Debug\net6.0-windows\CaptureMirror.dll
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\bin\Debug\net6.0-windows\CaptureMirror.pdb
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\obj\Debug\net6.0-windows\CaptureMirror.csproj.AssemblyReference.cache
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\obj\Debug\net6.0-windows\CaptureMirror.Form1.resources
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\obj\Debug\net6.0-windows\CaptureMirror.csproj.GenerateResource.cache
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\obj\Debug\net6.0-windows\CaptureMirror.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\obj\Debug\net6.0-windows\CaptureMirror.AssemblyInfoInputs.cache
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\obj\Debug\net6.0-windows\CaptureMirror.AssemblyInfo.cs
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\obj\Debug\net6.0-windows\CaptureMirror.csproj.CoreCompileInputs.cache
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\obj\Debug\net6.0-windows\CaptureMirror.dll
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\obj\Debug\net6.0-windows\refint\CaptureMirror.dll
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\obj\Debug\net6.0-windows\CaptureMirror.pdb
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\obj\Debug\net6.0-windows\CaptureMirror.genruntimeconfig.cache
+C:\Users\mic\Documents\GitHub\CaptureMirror\Src\CaptureMirror\CaptureMirror\obj\Debug\net6.0-windows\ref\CaptureMirror.dll
