@@ -45,3 +45,11 @@ C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\obj\Rele
 C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScr.4FF03EE4.Up2Date
 C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScreen.exe
 C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\obj\Release\PrintScreen.pdb
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\bin\Release\DesktopDuplication.dll
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\bin\Release\SharpDX.Direct3D11.dll
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\bin\Release\SharpDX.DXGI.dll
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\bin\Release\SharpDX.dll
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\bin\Release\DesktopDuplication.pdb
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\bin\Release\SharpDX.Direct3D11.xml
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\bin\Release\SharpDX.DXGI.xml
+C:\Users\micha\Documents\github\PrintScreen\Src\PrintScreen\PrintScreen\bin\Release\SharpDX.xml
