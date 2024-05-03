@@ -9,7 +9,6 @@ using SharpDX.Direct3D11;
 using System.Drawing.Imaging;
 using Device = SharpDX.Direct3D11.Device;
 using MapFlags = SharpDX.Direct3D11.MapFlags;
-using DesktopDuplication;
 using System.IO;
 
 namespace CaptureTest
