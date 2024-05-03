@@ -9,6 +9,9 @@ using D3D11 = SharpDX.Direct3D11;
 using D2D = SharpDX.Direct2D1;
 using WIC = SharpDX.WIC;
 using Interop = SharpDX.Mathematics.Interop;
+using System.Drawing;
+using System.Linq;
+using SharpDX;
 
 namespace CaptureScreen
 {
@@ -17,31 +20,34 @@ namespace CaptureScreen
         private GraphicsDeviceManager _graphics;
         private Microsoft.Xna.Framework.Graphics.SpriteBatch _spriteBatch;
         private Microsoft.Xna.Framework.Graphics.Texture2D texture1 = null, texture1temp = null;
-        private D3D11.Device _device;
-        private DXGI.OutputDuplication _outputDuplication;
         private static int width = Screen.PrimaryScreen.Bounds.Width, height = Screen.PrimaryScreen.Bounds.Height;
-        private static MemoryStream file = new MemoryStream();
+        private static long length = 0;
 
         public Game1()
         {
-            InitCapture();
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             _graphics.PreferredBackBufferWidth = 300;
             _graphics.PreferredBackBufferHeight = 200;
-            Exiting += Shutdown;
         }
 
-        public void Shutdown(object sender, EventArgs e)
+        private void GetLength()
         {
-            _outputDuplication?.Dispose();
-            _device?.Dispose();
+            Bitmap bmp = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.Clear(System.Drawing.Color.Black);
+            }
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            length = ms.ToArray().Length;
+            texture1temp = byteArrayToTexture(ms.ToArray());
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            GetLength();
 
             base.Initialize();
         }
@@ -62,40 +68,40 @@ namespace CaptureScreen
 
         protected override void Draw(GameTime gameTime)
         {
-            try
+            byte[] raw = CaptureScreen();
+            if (raw.Length > length)
             {
-                texture1 = byteArrayToTexture(CaptureScreen());
+                texture1 = byteArrayToTexture(raw);
                 texture1temp = texture1;
-                GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.White);
-                _spriteBatch.Begin();
-                _spriteBatch.Draw(texture1temp, new Microsoft.Xna.Framework.Vector2(0, 0), new Microsoft.Xna.Framework.Rectangle(0, 0, width, height), Microsoft.Xna.Framework.Color.White);
-                _spriteBatch.End();
-                base.Draw(gameTime);
             }
-            catch { }
-        }
-        public void InitCapture()
-        {
-            var adapterIndex = 0;
-            var outputIndex = 0;
-            using (var dxgiFactory = new DXGI.Factory1())
-            using (var dxgiAdapter = dxgiFactory.GetAdapter1(adapterIndex))
-            using (var output = dxgiAdapter.GetOutput(outputIndex))
-            using (var dxgiOutput = output.QueryInterface<DXGI.Output1>())
-            {
-                _device = new D3D11.Device(dxgiAdapter, D3D11.DeviceCreationFlags.BgraSupport);
-                _outputDuplication = dxgiOutput.DuplicateOutput(_device);
-            }
+            GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.White);
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(texture1temp, new Microsoft.Xna.Framework.Vector2(0, 0), new Microsoft.Xna.Framework.Rectangle(0, 0, width, height), Microsoft.Xna.Framework.Color.White);
+            _spriteBatch.End();
+            base.Draw(gameTime);
         }
         public byte[] CaptureScreen()
         {
+            MemoryStream file = new MemoryStream();
+            D3D11.Device _device;
+            DXGI.OutputDuplication _outputDuplication;
             try
             {
+                var adapterIndex = 0;
+                var outputIndex = 0;
+                using (var dxgiFactory = new DXGI.Factory1())
+                using (var dxgiAdapter = dxgiFactory.GetAdapter1(adapterIndex))
+                using (var output = dxgiAdapter.GetOutput(outputIndex))
+                using (var dxgiOutput = output.QueryInterface<DXGI.Output1>())
+                {
+                    _device = new D3D11.Device(dxgiAdapter, D3D11.DeviceCreationFlags.BgraSupport);
+                    _outputDuplication = dxgiOutput.DuplicateOutput(_device);
+                }
                 using (var dxgiDevice = _device.QueryInterface<DXGI.Device>())
                 using (var d2dFactory = new D2D.Factory1())
                 using (var d2dDevice = new D2D.Device(d2dFactory, dxgiDevice))
                 {
-                    _outputDuplication.AcquireNextFrame(10000, out var _, out var frame);
+                    _outputDuplication.AcquireNextFrame(1000000000, out var _, out var frame);
                     using (frame)
                     {
                         using (var frameDc = new D2D.DeviceContext(d2dDevice, D2D.DeviceContextOptions.None))
@@ -155,16 +161,15 @@ namespace CaptureScreen
                             }
                         }
                     }
-                    _outputDuplication.ReleaseFrame();
-                    return file.ToArray();
                 }
+                _outputDuplication.ReleaseFrame();
+                _device.Dispose();
+                _outputDuplication.Dispose();
+                return file.ToArray();
             }
             catch
             {
-                _outputDuplication?.Dispose();
-                _device?.Dispose();
-                InitCapture();
-                return file.ToArray();
+                return null;
             }
         }
         private Texture2D byteArrayToTexture(byte[] imageBytes)

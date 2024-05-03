@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,7 +10,6 @@ using D3D11 = SharpDX.Direct3D11;
 using D2D = SharpDX.Direct2D1;
 using WIC = SharpDX.WIC;
 using Interop = SharpDX.Mathematics.Interop;
-using SharpDX.Direct3D11;
 
 namespace CaptureTest
 {
@@ -28,11 +22,9 @@ namespace CaptureTest
         [DllImport("ntdll.dll", EntryPoint = "NtSetTimerResolution")]
         public static extern void NtSetTimerResolution(uint DesiredResolution, bool SetResolution, ref uint CurrentResolution);
         public static uint CurrentResolution = 0;
-        private D3D11.Device _device;
-        private DXGI.OutputDuplication _outputDuplication;
-        private static int width = Screen.PrimaryScreen.Bounds.Width, height = Screen.PrimaryScreen.Bounds.Height;
-        private static MemoryStream file = new MemoryStream();
         private Image bitmap, img;
+        private static int width = Screen.PrimaryScreen.Bounds.Width, height = Screen.PrimaryScreen.Bounds.Height;
+        private static long length = 0;
         public Form1()
         {
             InitializeComponent();
@@ -44,68 +36,54 @@ namespace CaptureTest
         }
         private void Form1_Shown(object sender, EventArgs e)
         {
-            try
-            {
-                InitCapture();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            GetLength();
             Task.Run(() => CopyScreen());
         }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void GetLength() 
         {
-            _outputDuplication?.Dispose();
-            _device?.Dispose();
+            Bitmap bmp = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(bmp)) 
+            { 
+                g.Clear(Color.Black); 
+            }
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            length = ms.Length;
         }
-
         private void CopyScreen()
         {
             while (true)
             {
-                Application.DoEvents();
                 bitmap = null;
-                try
-                {
-                    CaptureScreen();
-                    bitmap = img;
-                }
-                catch
-                {
-                    InitCapture();
-                    continue;
-                }
+                CaptureScreen();
+                bitmap = img;
                 if (bitmap != null)
-                {
                     this.BackgroundImage = bitmap;
-                }
                 Thread.Sleep(100);
             }
         }
-        public void InitCapture()
+        public void CaptureScreen()
         {
-            var adapterIndex = 0;
-            var outputIndex = 0;
-            using (var dxgiFactory = new DXGI.Factory1())
-            using (var dxgiAdapter = dxgiFactory.GetAdapter1(adapterIndex))
-            using (var output = dxgiAdapter.GetOutput(outputIndex))
-            using (var dxgiOutput = output.QueryInterface<DXGI.Output1>())
-            {
-                _device = new D3D11.Device(dxgiAdapter, D3D11.DeviceCreationFlags.BgraSupport);
-                _outputDuplication = dxgiOutput.DuplicateOutput(_device);
-            }
-        }
-        public byte[] CaptureScreen()
-        {
+            MemoryStream file = new MemoryStream();
+            D3D11.Device _device;
+            DXGI.OutputDuplication _outputDuplication;
             try
             {
+                var adapterIndex = 0;
+                var outputIndex = 0;
+                using (var dxgiFactory = new DXGI.Factory1())
+                using (var dxgiAdapter = dxgiFactory.GetAdapter1(adapterIndex))
+                using (var output = dxgiAdapter.GetOutput(outputIndex))
+                using (var dxgiOutput = output.QueryInterface<DXGI.Output1>())
+                {
+                    _device = new D3D11.Device(dxgiAdapter, D3D11.DeviceCreationFlags.BgraSupport);
+                    _outputDuplication = dxgiOutput.DuplicateOutput(_device);
+                }
                 using (var dxgiDevice = _device.QueryInterface<DXGI.Device>())
                 using (var d2dFactory = new D2D.Factory1())
                 using (var d2dDevice = new D2D.Device(d2dFactory, dxgiDevice))
                 {
-                    _outputDuplication.AcquireNextFrame(10000, out var _, out var frame);
+                    _outputDuplication.AcquireNextFrame(1000000000, out var _, out var frame);
                     using (frame)
                     {
                         using (var frameDc = new D2D.DeviceContext(d2dDevice, D2D.DeviceContextOptions.None))
@@ -165,24 +143,26 @@ namespace CaptureTest
                             }
                         }
                     }
-                    _outputDuplication.ReleaseFrame();
-                    MemoryStreamToBmp(file);
-                    return file.ToArray();
                 }
+                _outputDuplication.ReleaseFrame();
+                _device.Dispose();
+                _outputDuplication.Dispose();
+                MemoryStreamToBmp(file);
             }
-            catch
+            catch  
             {
-                _outputDuplication?.Dispose();
-                _device?.Dispose();
-                InitCapture();
-                return file.ToArray();
+                img = null;
             }
         }
         private void MemoryStreamToBmp(MemoryStream MS)
         {
-            img = new Bitmap(width, height);
-            MS.Seek(0, SeekOrigin.Begin);
-            img = Bitmap.FromStream(MS);
+            if (MS.Length > length)
+            {
+                MS.Seek(0, SeekOrigin.Begin);
+                img = Bitmap.FromStream(MS);
+            }
+            else
+                img = null;
         }
     }
 }
