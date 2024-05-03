@@ -12,6 +12,16 @@ using Interop = SharpDX.Mathematics.Interop;
 using System.Drawing;
 using System.Linq;
 using SharpDX;
+using SharpDX.Direct3D11;
+using System.Drawing.Imaging;
+using Device = SharpDX.Direct3D11.Device;
+using MapFlags = SharpDX.Direct3D11.MapFlags;
+using SharpDX.DXGI;
+using SharpDX.Direct3D9;
+using SharpDX.Direct2D1;
+using SharpDX.Win32;
+using SharpDX.WIC;
+using System.Data;
 
 namespace CaptureScreen
 {
@@ -20,35 +30,50 @@ namespace CaptureScreen
         private GraphicsDeviceManager _graphics;
         private Microsoft.Xna.Framework.Graphics.SpriteBatch _spriteBatch;
         private Microsoft.Xna.Framework.Graphics.Texture2D texture1 = null, texture1temp = null;
+        private System.Drawing.Image bmp, img;
         private static int width = Screen.PrimaryScreen.Bounds.Width, height = Screen.PrimaryScreen.Bounds.Height;
-        private static long length = 0;
-
+        private Device mDevice;
+        private Texture2DDescription mTextureDesc;
+        private OutputDescription mOutputDesc;
+        private OutputDuplication mDeskDupl;
+        private D3D11.Texture2D desktopImageTexture = null;
+        private OutputDuplicateFrameInformation frameInfo = new OutputDuplicateFrameInformation();
+        private byte[] raw;
+        private System.Drawing.Bitmap finalImage1, finalImage2;
+        private bool isFinalImage1 = false;
+        private System.Drawing.Bitmap FinalImage
+        {
+            get
+            {
+                return isFinalImage1 ? finalImage1 : finalImage2;
+            }
+            set
+            {
+                if (isFinalImage1)
+                {
+                    finalImage2 = value;
+                    if (finalImage1 != null) finalImage1.Dispose();
+                }
+                else
+                {
+                    finalImage1 = value;
+                    if (finalImage2 != null) finalImage2.Dispose();
+                }
+                isFinalImage1 = !isFinalImage1;
+            }
+        }
         public Game1()
         {
+            InitCaptureScreen();
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            _graphics.PreferredBackBufferWidth = 300;
-            _graphics.PreferredBackBufferHeight = 200;
-        }
-
-        private void GetLength()
-        {
-            Bitmap bmp = new Bitmap(width, height);
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                g.Clear(System.Drawing.Color.Black);
-            }
-            MemoryStream ms = new MemoryStream();
-            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-            length = ms.ToArray().Length;
-            texture1temp = byteArrayToTexture(ms.ToArray());
+            _graphics.PreferredBackBufferWidth = 500;
+            _graphics.PreferredBackBufferHeight = 400;
         }
 
         protected override void Initialize()
         {
-            GetLength();
-
             base.Initialize();
         }
 
@@ -68,116 +93,134 @@ namespace CaptureScreen
 
         protected override void Draw(GameTime gameTime)
         {
-            byte[] raw = CaptureScreen();
-            if (raw.Length > length)
-            {
-                texture1 = byteArrayToTexture(raw);
-                texture1temp = texture1;
-            }
-            GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.White);
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(texture1temp, new Microsoft.Xna.Framework.Vector2(0, 0), new Microsoft.Xna.Framework.Rectangle(0, 0, width, height), Microsoft.Xna.Framework.Color.White);
-            _spriteBatch.End();
-            base.Draw(gameTime);
-        }
-        public byte[] CaptureScreen()
-        {
-            MemoryStream file = new MemoryStream();
-            D3D11.Device _device;
-            DXGI.OutputDuplication _outputDuplication;
             try
             {
-                var adapterIndex = 0;
-                var outputIndex = 0;
-                using (var dxgiFactory = new DXGI.Factory1())
-                using (var dxgiAdapter = dxgiFactory.GetAdapter1(adapterIndex))
-                using (var output = dxgiAdapter.GetOutput(outputIndex))
-                using (var dxgiOutput = output.QueryInterface<DXGI.Output1>())
-                {
-                    _device = new D3D11.Device(dxgiAdapter, D3D11.DeviceCreationFlags.BgraSupport);
-                    _outputDuplication = dxgiOutput.DuplicateOutput(_device);
-                }
-                using (var dxgiDevice = _device.QueryInterface<DXGI.Device>())
-                using (var d2dFactory = new D2D.Factory1())
-                using (var d2dDevice = new D2D.Device(d2dFactory, dxgiDevice))
-                {
-                    _outputDuplication.AcquireNextFrame(1000000000, out var _, out var frame);
-                    using (frame)
-                    {
-                        using (var frameDc = new D2D.DeviceContext(d2dDevice, D2D.DeviceContextOptions.None))
-                        using (var frameSurface = frame.QueryInterface<DXGI.Surface>())
-                        using (var frameBitmap = new D2D.Bitmap1(frameDc, frameSurface))
-                        {
-                            var desc = new D3D11.Texture2DDescription
-                            {
-                                CpuAccessFlags = D3D11.CpuAccessFlags.None,
-                                BindFlags = D3D11.BindFlags.RenderTarget,
-                                Format = DXGI.Format.B8G8R8A8_UNorm,
-                                Width = (int)(frameSurface.Description.Width),
-                                Height = (int)(frameSurface.Description.Height),
-                                OptionFlags = D3D11.ResourceOptionFlags.None,
-                                MipLevels = 1,
-                                ArraySize = 1,
-                                SampleDescription = { Count = 1, Quality = 0 },
-                                Usage = D3D11.ResourceUsage.Default
-                            };
-                            using (var texture = new D3D11.Texture2D(_device, desc))
-                            using (var textureDc = new D2D.DeviceContext(d2dDevice, D2D.DeviceContextOptions.None))
-                            using (var textureSurface = texture.QueryInterface<DXGI.Surface>())
-                            using (var textureBitmap = new D2D.Bitmap1(textureDc, textureSurface))
-                            {
-                                textureDc.Target = textureBitmap;
-                                textureDc.BeginDraw();
-                                textureDc.DrawBitmap(
-                                    frameBitmap,
-                                    new Interop.RawRectangleF(0, 0, desc.Width, desc.Height),
-                                    1,
-                                    D2D.InterpolationMode.HighQualityCubic,
-                                    null,
-                                    null);
-                                textureDc.EndDraw();
-                                using (var wic = new WIC.ImagingFactory2())
-                                using (var jpegEncoder = new WIC.BitmapEncoder(wic, WIC.ContainerFormatGuids.Jpeg))
-                                {
-                                    jpegEncoder.Initialize(file);
-                                    using (var jpegFrame = new WIC.BitmapFrameEncode(jpegEncoder))
-                                    {
-                                        jpegFrame.Initialize();
-                                        using (var imageEncoder = new WIC.ImageEncoder(wic, d2dDevice))
-                                        {
-                                            imageEncoder.WriteFrame(textureBitmap, jpegFrame, new WIC.ImageParameters(
-                                                new D2D.PixelFormat(desc.Format, D2D.AlphaMode.Premultiplied),
-                                                textureDc.DotsPerInch.Width,
-                                                textureDc.DotsPerInch.Height,
-                                                0,
-                                                0,
-                                                desc.Width,
-                                                desc.Height));
-                                        }
-                                        jpegFrame.Commit();
-                                        jpegEncoder.Commit();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                _outputDuplication.ReleaseFrame();
-                _device.Dispose();
-                _outputDuplication.Dispose();
-                return file.ToArray();
+                CaptureScreen();
+                byte[] dataraw = raw;
+                texture1 = byteArrayToTexture(dataraw);
+                texture1temp = texture1;
+                GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.White);
+                _spriteBatch.Begin();
+                _spriteBatch.Draw(texture1temp, new Microsoft.Xna.Framework.Vector2(0, 0), new Microsoft.Xna.Framework.Rectangle(0, 0, width, height), Microsoft.Xna.Framework.Color.White);
+                _spriteBatch.End();
+                base.Draw(gameTime);
+            }
+            catch { }
+        }
+        public void InitCaptureScreen()
+        {
+            Adapter1 adapter = null;
+            try
+            {
+                adapter = new SharpDX.DXGI.Factory1().GetAdapter1(0);
+            }
+            catch { }
+            this.mDevice = new Device(adapter);
+            Output output = null;
+            try
+            {
+                output = adapter.GetOutput(0);
+            }
+            catch { }
+            var output1 = output.QueryInterface<Output1>();
+            this.mOutputDesc = output.Description;
+            this.mTextureDesc = new Texture2DDescription()
+            {
+                CpuAccessFlags = CpuAccessFlags.Read,
+                BindFlags = BindFlags.None,
+                Format = SharpDX.DXGI.Format.B8G8R8A8_UNorm,
+                Width = width,
+                Height = height,
+                OptionFlags = ResourceOptionFlags.None,
+                MipLevels = 1,
+                ArraySize = 1,
+                SampleDescription = { Count = 1, Quality = 0 },
+                Usage = ResourceUsage.Staging
+            };
+            try
+            {
+                this.mDeskDupl = output1.DuplicateOutput(mDevice);
             }
             catch
             {
-                return null;
             }
         }
-        private Texture2D byteArrayToTexture(byte[] imageBytes)
+        public void CaptureScreen()
+        {
+            RetrieveFrame();
+            try
+            {
+                ProcessFrame();
+            }
+            catch
+            {
+                ReleaseFrame();
+            }
+            try
+            {
+                ReleaseFrame();
+            }
+            catch
+            {
+            }
+        }
+        private void RetrieveFrame()
+        {
+            if (desktopImageTexture == null)
+                desktopImageTexture = new D3D11.Texture2D(mDevice, mTextureDesc);
+            SharpDX.DXGI.Resource desktopResource = null;
+            frameInfo = new OutputDuplicateFrameInformation();
+            try
+            {
+                mDeskDupl.AcquireNextFrame(500, out frameInfo, out desktopResource);
+            }
+            catch { }
+            using (var tempTexture = desktopResource.QueryInterface<D3D11.Texture2D>())
+                mDevice.ImmediateContext.CopyResource(tempTexture, desktopImageTexture);
+            desktopResource.Dispose();
+        }
+        private void ProcessFrame()
+        {
+            MemoryStream file = new MemoryStream();
+            // Get the desktop capture texture
+            var mapSource = mDevice.ImmediateContext.MapSubresource(desktopImageTexture, 0, MapMode.Read, MapFlags.None);
+
+            FinalImage = new System.Drawing.Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+            var boundsRect = new System.Drawing.Rectangle(0, 0, width, height);
+            // Copy pixels from screen capture Texture to GDI bitmap
+            var mapDest = FinalImage.LockBits(boundsRect, ImageLockMode.WriteOnly, FinalImage.PixelFormat);
+            var sourcePtr = mapSource.DataPointer;
+            var destPtr = mapDest.Scan0;
+            for (int y = 0; y < height; y++)
+            {
+                // Copy a single line 
+                Utilities.CopyMemory(destPtr, sourcePtr, width * 4);
+
+                // Advance pointers
+                sourcePtr = IntPtr.Add(sourcePtr, mapSource.RowPitch);
+                destPtr = IntPtr.Add(destPtr, mapDest.Stride);
+            }
+
+            // Release source and dest locks
+            FinalImage.UnlockBits(mapDest);
+            mDevice.ImmediateContext.UnmapSubresource(desktopImageTexture, 0);
+            FinalImage.Save(file, System.Drawing.Imaging.ImageFormat.Jpeg);
+            raw = file.ToArray();
+        }
+        private void ReleaseFrame()
+        {
+            try
+            {
+                mDeskDupl.ReleaseFrame();
+            }
+            catch { }
+        }
+        private Microsoft.Xna.Framework.Graphics.Texture2D byteArrayToTexture(byte[] imageBytes)
         {
             using (var stream = new MemoryStream(imageBytes))
             {
                 stream.Seek(0, SeekOrigin.Begin);
-                var tx = Texture2D.FromStream(GraphicsDevice, stream);
+                var tx = Microsoft.Xna.Framework.Graphics.Texture2D.FromStream(GraphicsDevice, stream);
                 return tx;
             }
         }
