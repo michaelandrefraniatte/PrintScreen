@@ -1,0 +1,11 @@
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureTest\CaptureTest\bin\Release\CaptureTest.exe.config
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureTest\CaptureTest\bin\Release\CaptureTest.exe
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureTest\CaptureTest\bin\Release\CaptureTest.pdb
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureTest\CaptureTest\obj\Release\CaptureTest.csproj.AssemblyReference.cache
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureTest\CaptureTest\obj\Release\CaptureTest.Form1.resources
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureTest\CaptureTest\obj\Release\CaptureTest.Properties.Resources.resources
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureTest\CaptureTest\obj\Release\CaptureTest.csproj.GenerateResource.cache
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureTest\CaptureTest\obj\Release\CaptureTest.csproj.CoreCompileInputs.cache
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureTest\CaptureTest\obj\Release\CaptureT.3A1A0332.Up2Date
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureTest\CaptureTest\obj\Release\CaptureTest.exe
+C:\Users\micha\Documents\github\PrintScreen\Src\CaptureTest\CaptureTest\obj\Release\CaptureTest.pdb
